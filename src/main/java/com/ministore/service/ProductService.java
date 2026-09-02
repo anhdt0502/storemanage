@@ -7,8 +7,11 @@ import java.util.List;
 
 public class ProductService {
 
-    private final ProductDAO productDAO =
-            new ProductDAO();
+    private final ProductDAO productDAO ;
+
+    public ProductService() {
+        this.productDAO = new ProductDAO();
+    }
 
     public List<Product> findAll() {
 

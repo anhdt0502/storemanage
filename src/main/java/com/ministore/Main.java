@@ -1,6 +1,7 @@
 package com.ministore;
 
 import com.ministore.controller.HomeServlet;
+import com.ministore.controller.ProductServlet;
 import org.apache.catalina.Context;
 import org.apache.catalina.startup.Tomcat;
 
@@ -27,11 +28,22 @@ public class Main {
                 "homeServlet",
                 new HomeServlet()
         );
-
         context.addServletMappingDecoded(
                 "/home",
                 "homeServlet"
         );
+
+        Tomcat.addServlet(
+                context,
+                "productServlet",
+                new ProductServlet()
+        );
+        context.addServletMappingDecoded(
+                "/products",
+                "productServlet"
+        );
+
+
 
         tomcat.start();
 

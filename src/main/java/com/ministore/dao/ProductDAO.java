@@ -15,7 +15,19 @@ public class ProductDAO {
 
         List<Product> products = new ArrayList<>();
 
-        String sql = "SELECT * FROM products";
+        String sql = """
+                SELECT
+                    id,
+                    name,
+                    price,
+                    stock,
+                    category_id,
+                    description,
+                    image_url,
+                    status
+                FROM products
+                ORDER BY id DESC
+                """;
 
         try (
                 Connection connection =
@@ -50,6 +62,18 @@ public class ProductDAO {
 
                 product.setCategoryId(
                         resultSet.getInt("category_id")
+                );
+
+                product.setDescription(
+                        resultSet.getString("description")
+                );
+
+                product.setImageUrl(
+                        resultSet.getString("image_url")
+                );
+
+                product.setStatus(
+                        resultSet.getInt("status")
                 );
 
                 products.add(product);
