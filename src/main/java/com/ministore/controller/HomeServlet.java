@@ -17,11 +17,12 @@ public class HomeServlet extends HttpServlet {
             HttpServletRequest request,
             HttpServletResponse response
     ) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/home.jsp");
-        if (dispatcher == null) {
-            response.getWriter().println("Không tìm thấy: /home.jsp");
-            return;
-        }
+
+        RequestDispatcher dispatcher =
+                request.getRequestDispatcher(
+                        "/WEB-INF/views/home.jsp"
+                );
+
         dispatcher.forward(request, response);
     }
 }
