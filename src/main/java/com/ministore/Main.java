@@ -4,6 +4,8 @@ import com.ministore.controller.HomeServlet;
 import org.apache.catalina.Context;
 import org.apache.catalina.startup.Tomcat;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Main {
@@ -14,12 +16,13 @@ public class Main {
 
         tomcat.setPort(8080);
         tomcat.getConnector();
-        String webappPath = Paths
-                .get("src/main/webapp")
+        String webappPath = String.valueOf(Paths
+                .get("src", "main", "webapp")
                 .toAbsolutePath()
-                .toString();
+                .normalize());
+        System.out.println("Webapp path: " + webappPath);
 
-        Context context = tomcat.addContext("", webappPath);
+        Context context = tomcat.addContext("", webappPath.toString());
 
         Tomcat.addServlet(
                 context,
@@ -31,12 +34,10 @@ public class Main {
                 "/home",
                 "homeServlet"
         );
-
-
         tomcat.start();
 
         System.out.println(
-                "Mini Store running at http://localhost:8080"
+                "Mini Store running at http://localhost:8080/home"
         );
 
         tomcat.getServer().await();

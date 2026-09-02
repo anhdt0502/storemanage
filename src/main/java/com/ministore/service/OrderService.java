@@ -1,4 +1,4 @@
-package com.ministore.servive;
+package com.ministore.service;
 
 public class OrderService {
 }

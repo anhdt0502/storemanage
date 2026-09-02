@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet
+@WebServlet("/home")
 public class HomeServlet extends HttpServlet {
 
     @Override
@@ -17,30 +17,11 @@ public class HomeServlet extends HttpServlet {
             HttpServletRequest request,
             HttpServletResponse response
     ) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/index.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/home.jsp");
         if (dispatcher == null) {
-            response.getWriter().println("Không tìm thấy: /WEB-INF/views/index.jsp");
+            response.getWriter().println("Không tìm thấy: /home.jsp");
             return;
         }
         dispatcher.forward(request, response);
-
-//        response.setContentType("text/html;charset=UTF-8");
-
-//        response.getWriter().println("""
-//                <!DOCTYPE html>
-//                <html>
-//                <head>
-//                    <meta charset="UTF-8">
-//                    <title>Mini Store</title>
-//                </head>
-//                <body>
-//
-//                    <h1>Mini Store Management System</h1>
-//
-//                    <p>Servlet is working!</p>
-//
-//                </body>
-//                </html>
-//                """);
     }
 }

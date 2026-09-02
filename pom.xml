@@ -53,11 +53,13 @@
           <artifactId>tomcat-embed-core</artifactId>
           <version>10.1.44</version>
       </dependency>
+
       <dependency>
           <groupId>org.apache.tomcat.embed</groupId>
           <artifactId>tomcat-embed-jasper</artifactId>
           <version>10.1.44</version>
       </dependency>
+
   </dependencies>
   <build>
     <finalName>storemanage</finalName>
