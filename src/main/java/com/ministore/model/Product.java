@@ -12,6 +12,7 @@ public class Product {
     private String description;
     private String imageUrl;
     private int status;
+    private String categoryName;
 
     public Product() {
     }
@@ -24,7 +25,8 @@ public class Product {
             int categoryId,
             String description,
             String imageUrl,
-            int status
+            int status,
+            String categoryName
     ) {
         this.id = id;
         this.name = name;
@@ -34,6 +36,8 @@ public class Product {
         this.description = description;
         this.imageUrl = imageUrl;
         this.status = status;
+        this.categoryName = categoryName;
+
     }
 
     public int getId() {
@@ -98,5 +102,12 @@ public class Product {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }
