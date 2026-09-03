@@ -2,6 +2,7 @@ package com.ministore;
 
 import com.ministore.controller.CategoryServlet;
 import com.ministore.controller.HomeServlet;
+import com.ministore.controller.OrderServlet;
 import com.ministore.controller.ProductServlet;
 import org.apache.catalina.Context;
 import org.apache.catalina.startup.Tomcat;
@@ -53,6 +54,17 @@ public class Main {
         context.addServletMappingDecoded(
                 "/categories",
                 "categoryServlet"
+        );
+
+        Tomcat.addServlet(
+                context,
+                "orderServlet",
+                new OrderServlet()
+        );
+
+        context.addServletMappingDecoded(
+                "/order",
+                "orderServlet"
         );
 
 

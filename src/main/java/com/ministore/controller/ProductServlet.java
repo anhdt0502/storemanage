@@ -93,8 +93,7 @@ public class ProductServlet extends HttpServlet {
             return;
         }
 
-        List<Product> products =
-                productService.findAll();
+        List<Product> products = productService.findAll();
 
         request.setAttribute("products", products);
 
