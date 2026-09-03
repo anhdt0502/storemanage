@@ -20,4 +20,13 @@ public class CategoryService {
     public List<Category> findAll() {
         return categoryDAO.findAll();
     }
+    public boolean insert(Category category) {
+        return categoryDAO.insert(category);
+    }
+    public Category findById(int id) {
+        return categoryDAO.findById(id);
+    }
+    public boolean update(Category category) {
+        return categoryDAO.update(category);
+    }
 }

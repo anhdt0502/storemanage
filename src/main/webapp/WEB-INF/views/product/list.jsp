@@ -16,6 +16,7 @@
             + Thêm sản phẩm
         </a>
     </div>
+    <div class="table-responsive">
 
     <table class="table table-bordered table-striped">
 
@@ -141,6 +142,7 @@
         </tbody>
 
     </table>
+    </div>
    </div>
 
 <jsp:include page="/WEB-INF/views/layout/footer.jsp" />

@@ -30,7 +30,7 @@
                 </a>
 
                 <a
-                        href="#"
+                        href="${pageContext.request.contextPath}/order"
                         class="nav-link">
 
                     🛒 Đơn hàng
@@ -38,7 +38,7 @@
                 </a>
 
                 <a
-                        href="#"
+                        href="${pageContext.request.contextPath}/categories"
                         class="nav-link">
 
                     📂 Danh mục
