@@ -1,0 +1,68 @@
+/* Container chứa danh sách sản phẩm */
+.product-container {
+    display: grid;
+    gap: 16px; /* Khoảng cách giữa các thẻ sản phẩm */
+    padding: 20px;
+}
+
+/* Khung của từng sản phẩm */
+.product-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Định dạng hình ảnh */
+.product-img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+/* Định dạng giá (hiển thị ngay dưới ảnh) */
+.product-price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #e53935;
+    margin-bottom: 6px;
+}
+
+/* Định dạng tên sản phẩm (nằm dưới giá) */
+.product-name {
+    font-size: 14px;
+    color: #333;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Giới hạn tên hiển thị tối đa 2 dòng */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* --- RESPONSIVE BREAKPOINTS --- */
+
+/* 1. Màn hình máy tính (Desktop): Hiển thị 6 sản phẩm/hàng */
+@media (min-width: 1024px) {
+    .product-container {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+/* 2. Màn hình điện thoại lớn / Tablet: Hiển thị 4 sản phẩm/hàng */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .product-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* 3. Màn hình điện thoại nhỏ: Hiển thị 3 sản phẩm/hàng */
+@media (max-width: 767px) {
+    .product-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

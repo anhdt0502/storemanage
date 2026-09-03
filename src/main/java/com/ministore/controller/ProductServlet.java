@@ -58,6 +58,7 @@ public class ProductServlet extends HttpServlet {
             return;
         }
 
+
         if ("edit".equals(action)) {
 
             String idParam = request.getParameter("id");
@@ -104,6 +105,7 @@ public class ProductServlet extends HttpServlet {
 
         dispatcher.forward(request, response);
     }
+
     @Override
     protected void doPost(
             HttpServletRequest request,

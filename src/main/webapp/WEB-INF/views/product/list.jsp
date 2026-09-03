@@ -1,5 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+
+
 
 <jsp:include page="/WEB-INF/views/layout/header.jsp" />
 
@@ -67,7 +70,7 @@
                 </td>
 
                 <td>
-                    ${product.price}
+                    <fmt:formatNumber value="${product.price}" type="number" groupingUsed="true" maxFractionDigits="0" /> đ
                 </td>
 
                 <td>
