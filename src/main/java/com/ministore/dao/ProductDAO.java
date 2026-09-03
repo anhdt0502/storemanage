@@ -6,6 +6,7 @@ import com.ministore.model.Product;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.CallableStatement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,32 +16,35 @@ public class ProductDAO {
 
         List<Product> products = new ArrayList<>();
 
-        String sql = """
-                SELECT
-                    p.id,
-                    p.name,
-                    p.price,
-                    p.stock,
-                    p.category_id,
-                    c.name AS category_name,
-                    p.description,
-                    p.image_url,
-                    p.status
-                FROM products p
-                JOIN categories c
-                    ON p.category_id = c.id
-                ORDER BY p.id DESC;
-                """;
+//        String sql = """
+//                SELECT
+//                    p.id,
+//                    p.name,
+//                    p.price,
+//                    p.stock,
+//                    p.category_id,
+//                    c.name AS category_name,
+//                    p.description,
+//                    p.image_url,
+//                    p.status
+//                FROM products p
+//                JOIN categories c
+//                    ON p.category_id = c.id
+//                ORDER BY p.id DESC;
+//                """;
+        String sql = "{CALL sp_get_all_products()}";
+
 
         try (
                 Connection connection =
                         DatabaseConnection.getConnection();
+                CallableStatement statement =
+                        connection.prepareCall(sql);
 
-                PreparedStatement statement =
-                        connection.prepareStatement(sql);
+//                PreparedStatement statement =
+//                        connection.prepareStatement(sql);
 
-                ResultSet resultSet =
-                        statement.executeQuery()
+                ResultSet resultSet =   statement.executeQuery()
         ) {
 
             while (resultSet.next()) {
