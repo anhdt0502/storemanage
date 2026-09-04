@@ -5,6 +5,22 @@
 <jsp:include page="/WEB-INF/views/layout/sidebar.jsp" />
 
 <div class="container-fluid">
+<c:if test="${not empty errorMessage}">
+    <div class="alert alert-danger alert-dismissible fade show"
+         role="alert">
+
+        <strong>Tạo đơn hàng thất bại!</strong>
+        <br>
+
+        ${errorMessage}
+
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close">
+        </button>
+    </div>
+</c:if>
 
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="mb-0">Tạo đơn hàng</h1>

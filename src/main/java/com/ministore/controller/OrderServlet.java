@@ -174,17 +174,25 @@ public class OrderServlet extends HttpServlet {
 
                 e.printStackTrace();
 
-                response.setContentType(
-                        "text/html;charset=UTF-8"
+                List<Product> products =
+                        productService.findAll();
+
+                request.setAttribute(
+                        "products",
+                        products
                 );
 
-                response.getWriter().println(
-                        "Tạo đơn hàng thất bại!"
+                request.setAttribute(
+                        "errorMessage",
+                        e.getMessage()
                 );
 
-                response.getWriter().println(
-                        "<br>Lỗi: " + e.getMessage()
-                );
+                RequestDispatcher dispatcher =
+                        request.getRequestDispatcher(
+                                "/WEB-INF/views/order/create.jsp"
+                        );
+
+                dispatcher.forward(request, response);
             }
         }
 

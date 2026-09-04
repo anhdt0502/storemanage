@@ -1,11 +1,12 @@
 package com.ministore;
 
-import com.ministore.controller.CategoryServlet;
-import com.ministore.controller.HomeServlet;
-import com.ministore.controller.OrderServlet;
-import com.ministore.controller.ProductServlet;
+import com.ministore.controller.*;
 import org.apache.catalina.Context;
 import org.apache.catalina.startup.Tomcat;
+import com.ministore.filter.AuthFilter;
+import org.apache.tomcat.util.descriptor.web.FilterDef;
+import org.apache.tomcat.util.descriptor.web.FilterMap;
+
 
 import java.io.File;
 import java.nio.file.Files;
@@ -24,6 +25,42 @@ public class Main {
         System.out.println("Webapp path: " + webappPath);
 
         Context context = tomcat.addWebapp("", webappPath);
+
+        Tomcat.addServlet(
+                context,
+                "loginServlet",
+                new LoginServlet()
+        );
+
+        context.addServletMappingDecoded(
+                "/login",
+                "loginServlet"
+        );
+        FilterDef filterDef = new FilterDef();
+        filterDef.setFilterName("authFilter");
+        filterDef.setFilter(new AuthFilter());
+
+        context.addFilterDef(filterDef);
+
+        FilterMap filterMap = new FilterMap();
+        filterMap.setFilterName("authFilter");
+
+        filterMap.addURLPattern("/home");
+        filterMap.addURLPattern("/products");
+        filterMap.addURLPattern("/categories");
+        filterMap.addURLPattern("/orders");
+
+        context.addFilterMap(filterMap);
+        Tomcat.addServlet(
+                context,
+                "logoutServlet",
+                new LogoutServlet()
+        );
+
+        context.addServletMappingDecoded(
+                "/logout",
+                "logoutServlet"
+        );
 
         Tomcat.addServlet(
                 context,
