@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Order {
     private int id;
-    private int customerId; // Hoặc tên khách hàng
+    private int customerId;
     private Date orderDate;
     private BigDecimal totalPrice;
     private int status; // 0: Chờ duyệt, 1: Đang giao, 2: Hoàn thành, 3: Đã hủy
