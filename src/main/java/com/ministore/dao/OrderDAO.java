@@ -6,8 +6,66 @@ import com.ministore.model.Order;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Statement;
 
 public class OrderDAO {
+    public int insert(
+            Order order,
+            Connection connection
+    ) throws Exception {
+
+        String sql = """
+            INSERT INTO orders
+            (
+                customer_id,
+                total_price,
+                status
+            )
+            VALUES (?, ?, ?)
+            """;
+
+        try (
+                PreparedStatement statement = connection.prepareStatement(
+                                sql,
+                                Statement.RETURN_GENERATED_KEYS
+                        )
+        ) {
+
+            statement.setInt(
+                    1,
+                    order.getCustomerId()
+            );
+
+            statement.setBigDecimal(
+                    2,
+                    order.getTotalPrice()
+            );
+
+            statement.setInt(
+                    3,
+                    order.getStatus()
+            );
+
+            int rowsAffected =
+                    statement.executeUpdate();
+
+            if (rowsAffected == 0) {
+                return 0;
+            }
+
+            try (
+                    ResultSet resultSet =
+                            statement.getGeneratedKeys()
+            ) {
+
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+            }
+        }
+
+        return 0;
+    }
     public List<Order> findAll(){
         List<Order> orders = new ArrayList<>();
         String sql = """
@@ -91,6 +149,60 @@ public class OrderDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    public int insert(Order order) {
+
+        String sql = """
+            INSERT INTO orders
+            (
+                customer_id,
+                total_price,
+                status
+            )
+            VALUES (?, ?, ?)
+            """;
+
+        try (
+                Connection connection =
+                        DatabaseConnection.getConnection();
+
+                PreparedStatement statement =
+                        connection.prepareStatement(
+                                sql,
+                                java.sql.Statement.RETURN_GENERATED_KEYS
+                        )
+        ) {
+
+            statement.setInt(1,
+                    order.getCustomerId()
+            );
+
+            statement.setBigDecimal(2, order.getTotalPrice()
+            );
+
+            statement.setInt(3, order.getStatus()
+            );
+
+            int rowsAffected = statement.executeUpdate();
+
+            if (rowsAffected == 0) {
+                return 0;
+            }
+
+            try (
+                    ResultSet resultSet = statement.getGeneratedKeys()
+            ) {
+
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 
 }

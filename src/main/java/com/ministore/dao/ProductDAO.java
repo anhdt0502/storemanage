@@ -176,6 +176,84 @@ public class ProductDAO {
 
         return null;
     }
+    public Product findById(int id, Connection connection) throws Exception {
+
+        String sql = """
+            SELECT
+                p.id,
+                p.name,
+                p.price,
+                p.stock,
+                p.category_id,
+                c.name AS category_name,
+                p.description,
+                p.image_url,
+                p.status
+            FROM products p
+            JOIN categories c
+                ON p.category_id = c.id
+            WHERE p.id = ?
+            """;
+
+        try (
+                PreparedStatement statement =
+                        connection.prepareStatement(sql)
+        ) {
+
+            statement.setInt(1, id);
+
+            try (
+                    ResultSet resultSet =
+                            statement.executeQuery()
+            ) {
+
+                if (resultSet.next()) {
+
+                    Product product = new Product();
+
+                    product.setId(
+                            resultSet.getInt("id")
+                    );
+
+                    product.setName(
+                            resultSet.getString("name")
+                    );
+
+                    product.setPrice(
+                            resultSet.getBigDecimal("price")
+                    );
+
+                    product.setStock(
+                            resultSet.getInt("stock")
+                    );
+
+                    product.setCategoryId(
+                            resultSet.getInt("category_id")
+                    );
+
+                    product.setCategoryName(
+                            resultSet.getString("category_name")
+                    );
+
+                    product.setDescription(
+                            resultSet.getString("description")
+                    );
+
+                    product.setImageUrl(
+                            resultSet.getString("image_url")
+                    );
+
+                    product.setStatus(
+                            resultSet.getInt("status")
+                    );
+
+                    return product;
+                }
+            }
+        }
+
+        return null;
+    }
     public boolean update(Product product) {
 
         String sql = """
@@ -286,5 +364,33 @@ public class ProductDAO {
         }
 
         return false;
+    }
+    public boolean updateStock(
+            int productId,
+            int quantity,
+            Connection connection
+    ) throws Exception {
+
+        String sql = """
+            UPDATE products
+            SET stock = stock - ?
+            WHERE id = ?
+              AND stock >= ?
+            """;
+
+        try (
+                PreparedStatement statement =
+                        connection.prepareStatement(sql)
+        ) {
+
+            statement.setInt(1, quantity);
+            statement.setInt(2, productId);
+            statement.setInt(3, quantity);
+
+            int rowsAffected =
+                    statement.executeUpdate();
+
+            return rowsAffected > 0;
+        }
     }
 }

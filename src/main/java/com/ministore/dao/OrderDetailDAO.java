@@ -10,6 +10,53 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDetailDAO {
+    public boolean insert(
+            OrderDetail detail,
+            Connection connection
+    ) throws Exception {
+
+        String sql = """
+            INSERT INTO order_details
+            (
+                order_id,
+                product_id,
+                quantity,
+                price
+            )
+            VALUES (?, ?, ?, ?)
+            """;
+
+        try (
+                PreparedStatement statement =
+                        connection.prepareStatement(sql)
+        ) {
+
+            statement.setInt(
+                    1,
+                    detail.getOrderId()
+            );
+
+            statement.setInt(
+                    2,
+                    detail.getProductId()
+            );
+
+            statement.setInt(
+                    3,
+                    detail.getQuantity()
+            );
+
+            statement.setBigDecimal(
+                    4,
+                    detail.getPrice()
+            );
+
+            int rowsAffected =
+                    statement.executeUpdate();
+
+            return rowsAffected > 0;
+        }
+    }
 
     public List<OrderDetail> findByOrderId(int orderId) {
 

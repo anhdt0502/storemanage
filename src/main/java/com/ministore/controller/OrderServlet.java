@@ -1,7 +1,11 @@
 package com.ministore.controller;
 
 import com.ministore.model.Order;
+import com.ministore.model.OrderDetail;
+import com.ministore.service.OrderDetailService;
 import com.ministore.service.OrderService;
+import com.ministore.model.Product;
+import com.ministore.service.ProductService;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -12,29 +16,76 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/order")
+@WebServlet("/orders")
 public class OrderServlet extends HttpServlet {
     private OrderService orderService ;
+    private OrderDetailService orderDetailService;
+    private ProductService productService;
     @Override
     public void init() {
+
         orderService = new OrderService();
+        orderDetailService = new OrderDetailService();
+        productService = new ProductService();
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         response.setContentType("text/html;charset=UTF-8");
-        try {
+        String action =  request.getParameter("action");
+        if ("detail".equals(action)) {
+
+            int id = Integer.parseInt(
+                    request.getParameter("id")
+            );
+
+            Order order =
+                    orderService.findById(id);
+
+            List<OrderDetail> orderDetails =
+                    orderDetailService.findByOrderId(id);
+
+            request.setAttribute("order",
+                    order
+            );
+
+            request.setAttribute("orderDetails",
+                    orderDetails
+            );
+
+            RequestDispatcher dispatcher =
+                    request.getRequestDispatcher(
+                            "/WEB-INF/views/order/detail.jsp"
+                    );
+
+            dispatcher.forward(request, response);
+
+            return;
+        }
+        if ("create".equals(action)) {
+            List<Product> products = productService.findAll();
+
+            request.setAttribute("products", products);
+
+            RequestDispatcher dispatcher =
+                    request.getRequestDispatcher(
+                            "/WEB-INF/views/order/create.jsp"
+                    );
+
+            dispatcher.forward(request, response);
+
+            return;
+        }
+
+
             List<Order> orderList = orderService.findAll();
             request.setAttribute("orders", orderList);
             RequestDispatcher dispatcher =
                     request.getRequestDispatcher("/WEB-INF/views/order/list.jsp");
             dispatcher.forward(request, response);
 
-        } catch ( Exception e ) {
-            e.printStackTrace();
-        }
+
 
     }
 
@@ -48,6 +99,94 @@ public class OrderServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         String action = request.getParameter("action");
+        if ("insert".equals(action)) {
+            int customerId =
+                    Integer.parseInt(
+                            request.getParameter("customerId")
+                    );
+
+            int status =
+                    Integer.parseInt(
+                            request.getParameter("status")
+                    );
+
+            String[] productIdValues =
+                    request.getParameterValues("productId");
+
+            String[] quantityValues =
+                    request.getParameterValues("quantity");
+
+            if (productIdValues == null ||
+                    quantityValues == null ||
+                    productIdValues.length == 0 ||
+                    productIdValues.length != quantityValues.length) {
+
+                response.getWriter().println(
+                        "Danh sách sản phẩm không hợp lệ!"
+                );
+
+                return;
+            }
+
+            int[] productIds =
+                    new int[productIdValues.length];
+
+            int[] quantities =
+                    new int[quantityValues.length];
+
+            for (int i = 0;
+                 i < productIdValues.length;
+                 i++) {
+
+                productIds[i] =
+                        Integer.parseInt(
+                                productIdValues[i]
+                        );
+
+                quantities[i] =
+                        Integer.parseInt(
+                                quantityValues[i]
+                        );
+            }
+
+            Order order = new Order();
+
+            order.setCustomerId(customerId);
+
+            order.setStatus(status);
+
+            try {
+
+                int orderId =
+                        orderService.createOrder(
+                                order,
+                                productIds,
+                                quantities
+                        );
+
+                response.sendRedirect(
+                        request.getContextPath()
+                                + "/orders?action=detail&id="
+                                + orderId
+                );
+
+            } catch (Exception e) {
+
+                e.printStackTrace();
+
+                response.setContentType(
+                        "text/html;charset=UTF-8"
+                );
+
+                response.getWriter().println(
+                        "Tạo đơn hàng thất bại!"
+                );
+
+                response.getWriter().println(
+                        "<br>Lỗi: " + e.getMessage()
+                );
+            }
+        }
 
         if ("updateStatus".equals(action)) {
 

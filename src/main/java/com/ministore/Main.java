@@ -63,7 +63,7 @@ public class Main {
         );
 
         context.addServletMappingDecoded(
-                "/order",
+                "/orders",
                 "orderServlet"
         );
 

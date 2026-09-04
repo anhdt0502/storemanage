@@ -30,7 +30,7 @@
                 </a>
 
                 <a
-                        href="${pageContext.request.contextPath}/order"
+                        href="${pageContext.request.contextPath}/orders"
                         class="nav-link">
 
                     🛒 Đơn hàng
