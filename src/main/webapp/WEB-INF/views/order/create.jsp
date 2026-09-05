@@ -168,6 +168,76 @@
                         + Thêm sản phẩm
 
                     </button>
+                    <!-- Giảm giá -->
+                    <div class="mb-3 mt-4">
+
+                        <label class="form-label">
+                            Giảm giá
+                        </label>
+
+                        <select
+                                name="discountType"
+                                id="discountType"
+                                class="form-select">
+
+                            <option value="none">
+                                Không giảm giá
+                            </option>
+
+                            <option value="10">
+                                Giảm 10%
+                            </option>
+
+                            <option value="20">
+                                Giảm 20%
+                            </option>
+
+                            <option value="30">
+                                Giảm 30%
+                            </option>
+
+                            <option value="custom">
+                                Tự nhập %
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Nhập % tùy chỉnh -->
+                    <div
+                            class="mb-3"
+                            id="customDiscountContainer"
+                            style="display: none;">
+
+                        <label class="form-label">
+                            Phần trăm giảm giá
+                        </label>
+
+                        <div class="input-group">
+
+                            <input
+                                    type="number"
+                                    name="customDiscount"
+                                    id="customDiscount"
+                                    class="form-control"
+                                    min="0"
+                                    max="100"
+                                    step="0.01"
+                                    value="0">
+
+                            <span class="input-group-text">
+                                %
+                            </span>
+
+                        </div>
+
+                        <div class="form-text">
+                            Nhập từ 0% đến 100%.
+                        </div>
+
+                    </div>
 
                 </div>
 
@@ -291,5 +361,43 @@
             }
 
         });
+        // =========================
+        // Discount
+        // =========================
+
+        const discountType =
+            document.getElementById("discountType");
+
+        const customDiscountContainer =
+            document.getElementById(
+                "customDiscountContainer"
+            );
+
+        const customDiscount =
+            document.getElementById("customDiscount");
+
+
+        discountType.addEventListener(
+            "change",
+            function () {
+
+                if (this.value === "custom") {
+
+                    customDiscountContainer.style.display =
+                        "block";
+
+                    customDiscount.required = true;
+
+                } else {
+
+                    customDiscountContainer.style.display =
+                        "none";
+
+                    customDiscount.required = false;
+
+                    customDiscount.value = 0;
+                }
+            }
+        );
 
 </script>

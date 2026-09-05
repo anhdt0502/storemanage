@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 
 @WebServlet("/orders")
@@ -120,6 +121,46 @@ public class OrderServlet extends HttpServlet {
                     Integer.parseInt(
                             request.getParameter("status")
                     );
+            String discountType =
+                    request.getParameter("discountType");
+
+            String customDiscountParam =
+                    request.getParameter("customDiscount");
+
+            BigDecimal discountPercentage = BigDecimal.ZERO;
+
+            if ("10".equals(discountType)) {
+
+                discountPercentage =
+                        BigDecimal.valueOf(10);
+
+            } else if ("20".equals(discountType)) {
+
+                discountPercentage =
+                        BigDecimal.valueOf(20);
+
+            } else if ("30".equals(discountType)) {
+
+                discountPercentage =
+                        BigDecimal.valueOf(30);
+
+            } else if ("custom".equals(discountType)) {
+
+                if (customDiscountParam != null &&
+                        !customDiscountParam.isBlank()) {
+
+                    discountPercentage =
+                            new BigDecimal(customDiscountParam);
+                }
+            }
+
+            if (discountPercentage.compareTo(BigDecimal.ZERO) < 0 ||
+                    discountPercentage.compareTo(BigDecimal.valueOf(100)) > 0) {
+
+                throw new IllegalArgumentException(
+                        "Phần trăm giảm giá phải từ 0% đến 100%!"
+                );
+            }
 
             String[] productIdValues =
                     request.getParameterValues("productId");

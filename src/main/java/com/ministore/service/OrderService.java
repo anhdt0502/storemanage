@@ -10,6 +10,7 @@ import com.ministore.model.Product;
 import com.ministore.util.TransactionManager;
 import com.ministore.service.discount.DiscountStrategy;
 import com.ministore.service.discount.NoDiscountStrategy;
+import com.ministore.service.discount.PercentageDiscountStrategy;
 
 
 import java.util.List;
