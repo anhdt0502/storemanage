@@ -47,10 +47,19 @@ public class ProductServlet extends HttpServlet {
                     categoryService.findAll();
 
             request.setAttribute("categories", categories);
+//
+//            RequestDispatcher dispatcher =
+//                    request.getRequestDispatcher(
+//                            "/WEB-INF/views/product/create.jsp"
+//                    );
+            request.setAttribute(
+                    "contentPage",
+                    "/WEB-INF/views/product/create.jsp"
+            );
 
             RequestDispatcher dispatcher =
                     request.getRequestDispatcher(
-                            "/WEB-INF/views/product/create.jsp"
+                            "/WEB-INF/views/layout/layout.jsp"
                     );
 
             dispatcher.forward(request, response);
@@ -83,9 +92,19 @@ public class ProductServlet extends HttpServlet {
 
             request.setAttribute("product", product);
 
+//            RequestDispatcher dispatcher =
+//                    request.getRequestDispatcher(
+//                            "/WEB-INF/views/product/edit.jsp"
+//                    );
+            request.setAttribute(
+                    "contentPage",
+                    "/WEB-INF/views/product/edit.jsp"
+            );
+
+
             RequestDispatcher dispatcher =
                     request.getRequestDispatcher(
-                            "/WEB-INF/views/product/edit.jsp"
+                            "/WEB-INF/views/layout/layout.jsp"
                     );
 
             dispatcher.forward(request, response);
@@ -97,10 +116,20 @@ public class ProductServlet extends HttpServlet {
 
         request.setAttribute("products", products);
 
+//        RequestDispatcher dispatcher =
+//                request.getRequestDispatcher(
+//                        "/WEB-INF/views/product/list.jsp"
+//                );
+        // đổi sang layout tổng
+        request.setAttribute(
+                "contentPage",
+                "/WEB-INF/views/product/list.jsp"
+        );
         RequestDispatcher dispatcher =
                 request.getRequestDispatcher(
-                        "/WEB-INF/views/product/list.jsp"
+                        "/WEB-INF/views/layout/layout.jsp"
                 );
+
 
         dispatcher.forward(request, response);
     }

@@ -1,68 +1,175 @@
-/* Container chứa danh sách sản phẩm */
+/* ========================================
+   HOME - PRODUCT CONTAINER
+   ======================================== */
+
 .product-container {
     display: grid;
-    gap: 16px; /* Khoảng cách giữa các thẻ sản phẩm */
+    gap: 16px;
     padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-/* Khung của từng sản phẩm */
+
+/* ========================================
+   PRODUCT CARD
+   ======================================== */
+
 .product-card {
     background: #fff;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     padding: 12px;
     text-align: center;
+
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    box-sizing: border-box;
+
+    transition: transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-/* Định dạng hình ảnh */
+.product-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+
+/* ========================================
+   PRODUCT IMAGE
+   ======================================== */
+
 .product-img {
     width: 100%;
     height: 150px;
+
     object-fit: cover;
+
     border-radius: 4px;
+
     margin-bottom: 10px;
+
+    display: block;
 }
 
-/* Định dạng giá (hiển thị ngay dưới ảnh) */
+
+/* ========================================
+   PRODUCT PRICE
+   ======================================== */
+
 .product-price {
     font-size: 16px;
     font-weight: bold;
+
     color: #e53935;
+
     margin-bottom: 6px;
 }
 
-/* Định dạng tên sản phẩm (nằm dưới giá) */
+
+/* ========================================
+   PRODUCT NAME
+   ======================================== */
+
 .product-name {
     font-size: 14px;
     color: #333;
+
+    line-height: 1.4;
+
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* Giới hạn tên hiển thị tối đa 2 dòng */
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+
     overflow: hidden;
+
+    min-height: 40px;
 }
 
-/* --- RESPONSIVE BREAKPOINTS --- */
 
-/* 1. Màn hình máy tính (Desktop): Hiển thị 6 sản phẩm/hàng */
+/* ========================================
+   PRODUCT DESCRIPTION
+   ======================================== */
+
+.product-description {
+    font-size: 13px;
+    color: #666;
+
+    margin-top: 6px;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+
+    line-height: 1.4;
+}
+
+
+/* ========================================
+   DESKTOP
+   6 PRODUCTS / ROW
+   ======================================== */
+
 @media (min-width: 1024px) {
+
     .product-container {
-        grid-template-columns: repeat(6, 1fr);
+        grid-template-columns: repeat(6, minmax(0, 1fr));
     }
+
 }
 
-/* 2. Màn hình điện thoại lớn / Tablet: Hiển thị 4 sản phẩm/hàng */
-@media (min-width: 768px) and (max-width: 1023px) {
+
+/* ========================================
+   TABLET
+   4 PRODUCTS / ROW
+   ======================================== */
+
+@media (min-width: 768px)
+and (max-width: 1023px) {
+
     .product-container {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(4, minmax(0, 1fr));
     }
+
 }
 
-/* 3. Màn hình điện thoại nhỏ: Hiển thị 3 sản phẩm/hàng */
+
+/* ========================================
+   MOBILE
+   3 PRODUCTS / ROW
+   ======================================== */
+
 @media (max-width: 767px) {
+
     .product-container {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        padding: 10px;
     }
+
+    .product-card {
+        padding: 8px;
+    }
+
+    .product-img {
+        height: 120px;
+    }
+
+    .product-price {
+        font-size: 14px;
+    }
+
+    .product-name {
+        font-size: 13px;
+    }
+
+    .product-description {
+        font-size: 12px;
+    }
+
 }

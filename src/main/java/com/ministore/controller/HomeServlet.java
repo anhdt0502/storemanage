@@ -36,18 +36,21 @@ public class HomeServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         try {
-            // 1. Lấy danh sách sản phẩm từ cơ sở dữ liệu
             List<Product> productList = productService.findAll();
             request.setAttribute("products", productList);
-        RequestDispatcher dispatcher =
-                request.getRequestDispatcher(
-                        "/WEB-INF/views/home.jsp"
-                );
+            request.setAttribute(
+                    "contentPage",
+                    "/WEB-INF/views/home.jsp"
+            );
+            RequestDispatcher dispatcher =
+                    request.getRequestDispatcher(
+                            "/WEB-INF/views/layout/layout.jsp"
+                    );
 
         dispatcher.forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
-            // Nếu lỗi có thể chuyển hướng sang trang error hoặc in thông báo
+
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Lỗi tải trang chủ!");
         }
     }
