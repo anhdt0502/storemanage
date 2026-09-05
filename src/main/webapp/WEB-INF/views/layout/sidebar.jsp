@@ -13,7 +13,7 @@
 
             <a href="${pageContext.request.contextPath}/home"
                class="nav-link">
-                🏠 Dashboard
+                🏠 Trang trủ
             </a>
 
             <a href="${pageContext.request.contextPath}/products"

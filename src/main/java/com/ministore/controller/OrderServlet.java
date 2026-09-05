@@ -54,9 +54,13 @@ public class OrderServlet extends HttpServlet {
                     orderDetails
             );
 
+            request.setAttribute(
+                    "contentPage",
+                    "/WEB-INF/views/order/detail.jsp"
+            );
             RequestDispatcher dispatcher =
                     request.getRequestDispatcher(
-                            "/WEB-INF/views/order/detail.jsp"
+                            "/WEB-INF/views/layout/layout.jsp"
                     );
 
             dispatcher.forward(request, response);
@@ -68,9 +72,13 @@ public class OrderServlet extends HttpServlet {
 
             request.setAttribute("products", products);
 
+            request.setAttribute(
+                    "contentPage",
+                    "/WEB-INF/views/order/create.jsp"
+            );
             RequestDispatcher dispatcher =
                     request.getRequestDispatcher(
-                            "/WEB-INF/views/order/create.jsp"
+                            "/WEB-INF/views/layout/layout.jsp"
                     );
 
             dispatcher.forward(request, response);
@@ -81,15 +89,18 @@ public class OrderServlet extends HttpServlet {
 
             List<Order> orderList = orderService.findAll();
             request.setAttribute("orders", orderList);
+            request.setAttribute(
+                "contentPage",
+                "/WEB-INF/views/order/list.jsp"
+        );
             RequestDispatcher dispatcher =
-                    request.getRequestDispatcher("/WEB-INF/views/order/list.jsp");
+                request.getRequestDispatcher(
+                        "/WEB-INF/views/layout/layout.jsp"
+                );
             dispatcher.forward(request, response);
 
 
-
     }
-
-
 
 
     @Override
@@ -186,10 +197,15 @@ public class OrderServlet extends HttpServlet {
                         "errorMessage",
                         e.getMessage()
                 );
+                request.setAttribute(
+                        "contentPage",
+                        "/WEB-INF/views/order/create.jsp"
+                );
+
 
                 RequestDispatcher dispatcher =
                         request.getRequestDispatcher(
-                                "/WEB-INF/views/order/create.jsp"
+                                "/WEB-INF/views/layout/layout.jsp"
                         );
 
                 dispatcher.forward(request, response);

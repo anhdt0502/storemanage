@@ -1,135 +1,175 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
-<jsp:include page="/WEB-INF/views/layout/header.jsp" />
-<jsp:include page="/WEB-INF/views/layout/sidebar.jsp" />
-
 <div class="container-fluid">
-<c:if test="${not empty errorMessage}">
-    <div class="alert alert-danger alert-dismissible fade show"
-         role="alert">
 
-        <strong>Tạo đơn hàng thất bại!</strong>
-        <br>
+    <!-- Hiển thị lỗi khi tạo đơn thất bại -->
+    <c:if test="${not empty errorMessage}">
 
-        ${errorMessage}
+        <div class="alert alert-danger alert-dismissible fade show"
+             role="alert">
 
-        <button type="button"
-                class="btn-close"
-                data-bs-dismiss="alert"
-                aria-label="Close">
-        </button>
-    </div>
-</c:if>
+            <strong>Tạo đơn hàng thất bại!</strong>
 
+            <br>
+
+            ${errorMessage}
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close">
+            </button>
+
+        </div>
+
+    </c:if>
+
+
+    <!-- Tiêu đề -->
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="mb-0">Tạo đơn hàng</h1>
 
-        <a href="${pageContext.request.contextPath}/orders"
-           class="btn btn-secondary">
+        <h1 class="mb-0">
+            Tạo đơn hàng
+        </h1>
+
+        <a
+                href="${pageContext.request.contextPath}/orders"
+                class="btn btn-secondary">
+
             Quay lại
+
         </a>
+
     </div>
 
+
+    <!-- Form -->
     <div class="card">
 
         <div class="card-header">
-            <strong>Thông tin đơn hàng</strong>
+
+            <strong>
+                Thông tin đơn hàng
+            </strong>
+
         </div>
+
 
         <div class="card-body">
 
-            <form method="post"
-                  action="${pageContext.request.contextPath}/orders">
+            <form
+                    method="post"
+                    action="${pageContext.request.contextPath}/orders">
 
-                <input type="hidden"
-                       name="action"
-                       value="insert">
+                <input
+                        type="hidden"
+                        name="action"
+                        value="insert">
 
-                <!-- Khách hàng -->
+
+                <!-- Customer -->
                 <div class="mb-3">
 
                     <label class="form-label">
                         Customer ID
                     </label>
 
-                    <input type="number"
-                           name="customerId"
-                           class="form-control"
-                           min="1"
-                           required>
+                    <input
+                            type="number"
+                            name="customerId"
+                            class="form-control"
+                            min="1"
+                            required>
 
                 </div>
 
-             <!-- Danh sách sản phẩm -->
-               <div class="mb-3">
+
+                <!-- Danh sách sản phẩm -->
+                <div class="mb-3">
 
                     <label class="form-label">
-                          Sản phẩm trong đơn hàng
-                                </label>
+                        Sản phẩm trong đơn hàng
+                    </label>
+
 
                     <div id="product-container">
 
-                          <!-- Dòng sản phẩm đầu tiên -->
-                               <div class="row product-row mb-3">
+                        <!-- Dòng sản phẩm đầu tiên -->
+                        <div class="row product-row mb-3">
 
-                                   <div class="col-md-7">
+                            <div class="col-md-7">
 
-                                   <select name="productId"
-                                            class="form-select"
-                                            required>
+                                <select
+                                        name="productId"
+                                        class="form-select"
+                                        required>
 
-                                            <option value="">
-                                           -- Chọn sản phẩm --
-                                            </option>
+                                    <option value="">
+                                        -- Chọn sản phẩm --
+                                    </option>
 
-                                       <c:forEach var="product"
-                                                    items="${products}">
 
-                                            <option value="${product.id}">
-                                                        ${product.name}
-                                                        - ${product.price}
-                                                        - Tồn kho: ${product.stock}
-                                            </option>
+                                    <c:forEach
+                                            var="product"
+                                            items="${products}">
 
-                                       </c:forEach>
+                                        <option
+                                                value="${product.id}">
 
-                                   </select>
+                                            ${product.name}
+                                            - ${product.price}
+                                            - Tồn kho: ${product.stock}
 
-                                   </div>
+                                        </option>
 
-                                        <div class="col-md-3">
+                                    </c:forEach>
 
-                                            <input type="number"
-                                                   name="quantity"
-                                                   class="form-control"
-                                                   min="1"
-                                                   value="1"
-                                                   required>
+                                </select>
 
-                                        </div>
+                            </div>
 
-                                        <div class="col-md-2">
 
-                                            <button type="button"
-                                                    class="btn btn-danger remove-product">
-                                                Xóa
-                                            </button>
+                            <div class="col-md-3">
 
-                                        </div>
+                                <input
+                                        type="number"
+                                        name="quantity"
+                                        class="form-control"
+                                        min="1"
+                                        value="1"
+                                        required>
 
-                                    </div>
+                            </div>
 
-                                </div>
 
-                          <button type="button"
-                                        id="add-product"
-                                        class="btn btn-success">
-                                    + Thêm sản phẩm
-                          </button>
+                            <div class="col-md-2">
+
+                                <button
+                                        type="button"
+                                        class="btn btn-danger remove-product">
+
+                                    Xóa
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                            type="button"
+                            id="add-product"
+                            class="btn btn-success">
+
+                        + Thêm sản phẩm
+
+                    </button>
 
                 </div>
-
 
 
                 <!-- Trạng thái -->
@@ -139,7 +179,9 @@
                         Trạng thái
                     </label>
 
-                    <select name="status"
+
+                    <select
+                            name="status"
                             class="form-select">
 
                         <option value="0">
@@ -162,14 +204,23 @@
 
                 </div>
 
-                <button type="submit"
+
+                <!-- Buttons -->
+                <button
+                        type="submit"
                         class="btn btn-primary">
+
                     Tạo đơn hàng
+
                 </button>
 
-                <a href="${pageContext.request.contextPath}/orders"
-                   class="btn btn-secondary">
+
+                <a
+                        href="${pageContext.request.contextPath}/orders"
+                        class="btn btn-secondary">
+
                     Hủy
+
                 </a>
 
             </form>
@@ -179,9 +230,13 @@
     </div>
 
 </div>
+
+
+<!-- JavaScript thêm / xóa sản phẩm -->
 <script>
 
-    document.getElementById("add-product")
+    document
+        .getElementById("add-product")
         .addEventListener("click", function () {
 
             const container =
@@ -202,6 +257,7 @@
             newRow.querySelector(
                 'input[name="quantity"]'
             ).value = 1;
+
 
             container.appendChild(newRow);
 
@@ -237,6 +293,3 @@
         });
 
 </script>
-
-
-<jsp:include page="/WEB-INF/views/layout/footer.jsp" />

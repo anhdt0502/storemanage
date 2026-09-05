@@ -30,10 +30,15 @@ public class CategoryServlet extends HttpServlet {
     ) throws ServletException, IOException {
         String action = request.getParameter("action");
         if ("create".equals(action)) {
+            request.setAttribute(
+                    "contentPage",
+                    "/WEB-INF/views/category/create.jsp"
+            );
+
 
             RequestDispatcher dispatcher =
                     request.getRequestDispatcher(
-                            "/WEB-INF/views/category/create.jsp"
+                            "/WEB-INF/views/layout/layout.jsp"
                     );
 
             dispatcher.forward(request, response);
@@ -46,18 +51,22 @@ public class CategoryServlet extends HttpServlet {
                     request.getParameter("id")
             );
 
-            Category category =
-                    categoryService.findById(id);
+            Category category = categoryService.findById(id);
 
             request.setAttribute(
                     "category",
                     category
             );
 
+            request.setAttribute(
+                    "contentPage",
+                    "/WEB-INF/views/category/edit.jsp"
+            );
             RequestDispatcher dispatcher =
                     request.getRequestDispatcher(
-                            "/WEB-INF/views/category/edit.jsp"
+                            "/WEB-INF/views/layout/layout.jsp"
                     );
+
 
             dispatcher.forward(request, response);
 
@@ -71,9 +80,14 @@ public class CategoryServlet extends HttpServlet {
                 categories
         );
 
+        request.setAttribute(
+                "contentPage",
+                "/WEB-INF/views/category/list.jsp"
+        );
+
         RequestDispatcher dispatcher =
                 request.getRequestDispatcher(
-                        "/WEB-INF/views/category/list.jsp"
+                        "/WEB-INF/views/layout/layout.jsp"
                 );
 
         dispatcher.forward(request, response);
@@ -154,6 +168,53 @@ public class CategoryServlet extends HttpServlet {
                         "/WEB-INF/views/category/edit.jsp"
                 ).forward(request, response);
             }
+        }
+        if ("delete".equals(action)) {
+
+            int id = Integer.parseInt(
+                    request.getParameter("id")
+            );
+
+            boolean success =
+                    categoryService.delete(id);
+
+            if (success) {
+
+                response.sendRedirect(
+                        request.getContextPath()
+                                + "/categories"
+                );
+
+            } else {
+
+                List<Category> categories =
+                        categoryService.findAll();
+
+                request.setAttribute(
+                        "categories",
+                        categories
+                );
+
+                request.setAttribute(
+                        "errorMessage",
+                        "Không thể xóa danh mục. " +
+                                "Danh mục có thể đang được sử dụng bởi sản phẩm."
+                );
+
+                request.setAttribute(
+                        "contentPage",
+                        "/WEB-INF/views/category/list.jsp"
+                );
+
+                RequestDispatcher dispatcher =
+                        request.getRequestDispatcher(
+                                "/WEB-INF/views/layout/layout.jsp"
+                        );
+
+                dispatcher.forward(request, response);
+            }
+
+            return;
         }
     }
 }

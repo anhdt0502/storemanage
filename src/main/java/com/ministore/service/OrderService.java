@@ -5,7 +5,6 @@ import com.ministore.dao.ProductDAO;
 import com.ministore.model.Order;
 import com.ministore.config.DatabaseConnection;
 import com.ministore.dao.OrderDetailDAO;
-import com.ministore.dao.ProductDAO;
 import com.ministore.model.OrderDetail;
 import com.ministore.model.Product;
 import com.ministore.util.TransactionManager;

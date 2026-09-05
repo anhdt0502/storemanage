@@ -175,4 +175,33 @@ public class CategoryDAO {
 
         return false;
     }
+    public boolean delete(int id) {
+
+        String sql = """
+        DELETE FROM categories
+        WHERE id = ?
+        """;
+
+        try (
+                Connection connection =
+                        DatabaseConnection.getConnection();
+
+                PreparedStatement statement =
+                        connection.prepareStatement(sql)
+        ) {
+
+            statement.setInt(1, id);
+
+            int rowsAffected =
+                    statement.executeUpdate();
+
+            return rowsAffected > 0;
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 }
